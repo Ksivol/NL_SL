@@ -1,4 +1,4 @@
-package com.example.nl_sl
+package com.example.nl_sl.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.whenStarted
+import com.example.nl_sl.MainViewModel
+import com.example.nl_sl.R
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
