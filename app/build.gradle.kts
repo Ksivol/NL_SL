@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -45,6 +48,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.cardview)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.preference.ktx)
 

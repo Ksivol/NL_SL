@@ -1,11 +1,11 @@
-package com.example.nl_sl.entities
+package com.example.nl_sl.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "shop_list_item")
-data class ShoppingListItem(
+data class ShoppingListItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 

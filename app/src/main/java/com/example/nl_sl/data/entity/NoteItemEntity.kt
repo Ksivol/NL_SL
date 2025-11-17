@@ -1,11 +1,11 @@
-package com.example.nl_sl.entities
+package com.example.nl_sl.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "note_list")
-data class NoteItem(
+data class NoteItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 

@@ -1,4 +1,4 @@
-package com.example.nl_sl.entities
+package com.example.nl_sl.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "shopping_list_names")
-data class ShoppingListNames(
+data class ShoppingListNamesEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
@@ -25,4 +25,4 @@ data class ShoppingListNames(
     @ColumnInfo(name = "itemsIds")
     val itemsIds: Int,
 
-): Serializable
+    ) : Serializable
