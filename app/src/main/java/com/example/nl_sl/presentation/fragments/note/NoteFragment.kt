@@ -1,10 +1,7 @@
-package com.example.nl_sl.presentation.fragments
+package com.example.nl_sl.presentation.fragments.note
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,14 +11,13 @@ import com.example.nl_sl.data.repository.NoteRepositoryImpl
 import com.example.nl_sl.databinding.FragmentNoteBinding
 import com.example.nl_sl.domain.usecase.GetAllNotesUseCase
 import com.example.nl_sl.domain.usecase.InsertNoteUseCase
-import com.example.nl_sl.presentation.NoteViewModel
+import com.example.nl_sl.presentation.fragments.utils.BaseFragment
 import com.example.nl_sl.presentation.main.MainApp
+import com.example.nl_sl.presentation.utils.viewBindings
 import kotlinx.coroutines.launch
 
-class NoteFragment : BaseFragment() {
-    private var _binding: FragmentNoteBinding? = null
-    private val binding: FragmentNoteBinding
-        get() = _binding!!
+class NoteFragment : BaseFragment(R.layout.fragment_note) {
+    private val binding: FragmentNoteBinding by viewBindings(FragmentNoteBinding::bind)
 
     private val viewModel: NoteViewModel by lazy {
         ViewModelProvider(
@@ -40,25 +36,13 @@ class NoteFragment : BaseFragment() {
         )[NoteViewModel::class.java]
     }
 
-    override fun onClickNew() {
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNoteBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onClickNew() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.noteItemListStateFlow.collect {
-
-                }
+                viewModel.noteItemListStateFlow.collect {}
             }
         }
     }
@@ -66,11 +50,5 @@ class NoteFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = NoteFragment()
     }
 }

@@ -6,26 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.nl_sl.R
 import com.example.nl_sl.databinding.ActivityMainBinding
-import com.example.nl_sl.presentation.NoteViewModel
-import com.example.nl_sl.presentation.fragments.FragmentManager
-import com.example.nl_sl.presentation.fragments.FragmentManager.setFragment
-import com.example.nl_sl.presentation.fragments.NewNoteFragment
-import com.example.nl_sl.presentation.fragments.NoteFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.launch
+import com.example.nl_sl.presentation.fragments.utils.FragmentManager.setFragment
+import com.example.nl_sl.presentation.fragments.notenew.NewNoteFragment
+import com.example.nl_sl.presentation.fragments.note.NoteFragment
+import com.example.nl_sl.presentation.utils.viewBindings
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
-    var bottomMenu: BottomNavigationView? = null
+    private val binding: ActivityMainBinding by viewBindings(viewBindingFactory = ActivityMainBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,52 +26,38 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setBottomNavListener()
-        supportFragmentManager.registerFragmentLifecycleCallbacks(object :
-            androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks() {
-            override fun onFragmentResumed(
-                fm: androidx.fragment.app.FragmentManager,
-                f: Fragment
-            ) {
-                super.onFragmentResumed(fm, f)
-                setSelectedMenuItem(f)
-            }
-        }, false)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                //viewModel.state.collect {}
-            }
-            FragmentManager.currentFrag.collect { fragment ->
-                fragment?.let { setSelectedMenuItem(it) }
+        supportFragmentManager.addOnBackStackChangedListener {
+            supportFragmentManager.findFragmentById(R.id.placeHolder)?.let {
+                val bool = it is NewNoteFragment
+                binding.bNav.isGone = bool
             }
         }
     }
 
     private fun setBottomNavListener() {
-        //binding.bNav.selectedItemId = R.id.notes
+        binding.bNav.selectedItemId = R.id.notes
         binding.bNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.settings -> {}
-                R.id.notes -> {
-                    //setFragment(NoteFragment.newInstance())
+                R.id.settings -> {
+                    true
                 }
 
-                R.id.shop_list -> {}
+                R.id.notes -> {
+                    setFragment(NoteFragment())
+                    true
+                }
+
+                R.id.shop_list -> {
+                    true
+                }
+
                 R.id.new_item -> {
                     setFragment(NewNoteFragment())
-                    //binding.bNav.isGone = true
+                    false
                 }
+
+                else -> false
             }
-            true
         }
-
-    }
-
-    fun setSelectedMenuItem(fragment: Fragment) {
-        val id: Int = when (fragment) {
-            is NoteFragment -> R.id.notes
-            is NewNoteFragment -> R.id.new_item
-            else -> R.id.notes
-        }
-        binding.bNav.selectedItemId = id
     }
 }

@@ -1,4 +1,4 @@
-package com.example.nl_sl.presentation
+package com.example.nl_sl.presentation.fragments.note
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +15,8 @@ class NoteViewModel(
     private val getAllNotesUseCase: GetAllNotesUseCase,
     private val insertNoteUseCase: InsertNoteUseCase
 ) : ViewModel() {
-    private val _noteItemListStateFlow: MutableStateFlow<List<NoteItemModel>> = MutableStateFlow(listOf())
+    private val _noteItemListStateFlow: MutableStateFlow<List<NoteItemModel>> =
+        MutableStateFlow(listOf())
     val noteItemListStateFlow: StateFlow<List<NoteItemModel>> = _noteItemListStateFlow.asStateFlow()
 
     init {

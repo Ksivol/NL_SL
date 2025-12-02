@@ -20,7 +20,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/placeHolder"
-        android:name="com.example.nl_sl.presentation.fragments.NoteFragment"
+        android:name="com.example.nl_sl.presentation.fragments.note.NoteFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bNav"
